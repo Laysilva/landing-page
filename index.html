@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>LadySafe — Segurança online para segurança offline</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+      scroll-snap-type:y mandatory;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:#0b0411;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    section{
+      min-height:100vh;
+      scroll-snap-align:start;
+      position:relative;
+      overflow:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* BACKGROUND */
+
+    .bg{
+      position:fixed;
+      inset:0;
+
+      background:
+      linear-gradient(
+        rgba(10,0,20,.72),
+        rgba(20,0,30,.84)
+      ),
+      url('assets/images/bg.jpg');
+
+      background-size:cover;
+      background-position:center;
+      z-index:-10;
+    }
+
+    .bg::after{
+      content:'';
+      position:absolute;
+      inset:0;
+
+      backdrop-filter:blur(6px);
+
+      background:
+      radial-gradient(circle at top left,
+      rgba(255,255,255,.08),
+      transparent 28%),
+
+      radial-gradient(circle at bottom right,
+      rgba(255,0,170,.15),
+      transparent 30%);
+    }
+
+    /* GLOW */
+
+    .glow{
+      position:fixed;
+      width:650px;
+      height:650px;
+      border-radius:50%;
+
+      background:
+      radial-gradient(circle,
+      rgba(195,0,255,.18),
+      transparent 70%);
+
+      filter:blur(45px);
+
+      z-index:-5;
+
+      animation:float 10s infinite ease-in-out;
+    }
+
+    .g1{
+      top:-220px;
+      left:-200px;
+    }
+
+    .g2{
+      bottom:-260px;
+      right:-200px;
+      animation-delay:4s;
+    }
+
+    @keyframes float{
+
+      0%{
+        transform:translateY(0px);
+      }
+
+      50%{
+        transform:translateY(35px);
+      }
+
+      100%{
+        transform:translateY(0px);
+      }
+
+    }
+
+    /* HEADER */
+
+    header{
+
+      position:fixed;
+      top:0;
+      left:0;
+
+      width:100%;
+
+      padding:24px 8%;
+
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      z-index:999;
+
+      backdrop-filter:blur(18px);
+
+      background:
+      rgba(12,0,22,.38);
+
+      border-bottom:
+      1px solid rgba(255,255,255,.08);
+
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo img{
+      width:58px;
+      height:58px;
+      object-fit:contain;
+
+      filter:
+      drop-shadow(0 0 18px rgba(255,0,200,.4));
+    }
+
+    .logo h1{
+
+      font-family:
+      'Cormorant Garamond',serif;
+
+      font-size:2.4rem;
+
+      background:
+      linear-gradient(
+      90deg,
+      #fff,
+      #ffc9f8,
+      #ff74f7);
+
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+
+    }
+
+    nav{
+      display:flex;
+      gap:34px;
+    }
+
+    nav a{
+
+      color:#f2dfff;
+
+      transition:.3s;
+
+      position:relative;
+
+    }
+
+    nav a:hover{
+      color:#ff8ce9;
+    }
+
+    nav a::after{
+
+      content:'';
+
+      position:absolute;
+
+      left:0;
+      bottom:-6px;
+
+      width:0%;
+      height:2px;
+
+      background:#ff5be7;
+
+      transition:.3s;
+
+    }
+
+    nav a:hover::after{
+      width:100%;
+    }
+
+    /* HERO */
+
+    .hero{
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      padding:160px 8% 80px;
+
+      text-align:center;
+
+    }
+
+    .hero-content{
+      max-width:1200px;
+    }
+
+    .badge{
+
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+
+      padding:12px 24px;
+
+      border-radius:999px;
+
+      background:
+      rgba(255,255,255,.07);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      backdrop-filter:blur(20px);
+
+      margin-bottom:34px;
+
+      color:#ffe2fb;
+    }
+
+    .hero h2{
+
+      font-family:
+      'Cormorant Garamond',serif;
+
+      font-size:6.5rem;
+
+      line-height:.92;
+
+      margin-bottom:28px;
+
+      letter-spacing:-2px;
+
+    }
+
+    .gradient{
+
+      background:
+      linear-gradient(
+      90deg,
+      #ffffff,
+      #ffc6f4,
+      #ff67ef);
+
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+
+    }
+
+    .hero p{
+
+      max-width:900px;
+
+      margin:auto;
+
+      color:#f4dcff;
+
+      line-height:2;
+
+      font-size:1.1rem;
+
+    }
+
+    /* BUTTONS */
+
+    .buttons{
+
+      margin-top:44px;
+
+      display:flex;
+      justify-content:center;
+      gap:20px;
+
+      flex-wrap:wrap;
+    }
+
+    .btn{
+
+      border:none;
+
+      padding:18px 34px;
+
+      border-radius:18px;
+
+      font-size:1rem;
+
+      cursor:pointer;
+
+      transition:.35s;
+
+      font-weight:600;
+
+    }
+
+    .btn-main{
+
+      background:
+      linear-gradient(
+      135deg,
+      #ff4cd7,
+      #8f00ff);
+
+      color:white;
+
+      box-shadow:
+      0 0 45px rgba(255,0,200,.28);
+
+    }
+
+    .btn-main:hover{
+
+      transform:
+      translateY(-4px)
+      scale(1.03);
+
+    }
+
+    .btn-secondary{
+
+      background:
+      rgba(255,255,255,.06);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      color:#edd6ff;
+
+    }
+
+    /* MOCKUP */
+
+    .mockup{
+
+      margin-top:70px;
+
+      background:
+      rgba(255,255,255,.05);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      border-radius:40px;
+
+      padding:40px;
+
+      backdrop-filter:blur(18px);
+
+      box-shadow:
+      0 0 90px rgba(255,0,200,.14);
+
+    }
+
+    .mockup img{
+
+      width:320px;
+
+      max-width:100%;
+
+      border-radius:36px;
+
+      box-shadow:
+      0 0 45px rgba(255,0,200,.25);
+
+    }
+
+    /* PROTEÇÃO */
+
+    .protecao{
+
+      padding:
+      140px 8% 100px;
+
+    }
+
+    .title{
+
+      text-align:center;
+
+      margin-bottom:70px;
+    }
+
+    .title h2{
+
+      font-family:
+      'Cormorant Garamond',serif;
+
+      font-size:5rem;
+
+      line-height:1;
+
+      margin-bottom:20px;
+
+    }
+
+    .title p{
+
+      max-width:850px;
+
+      margin:auto;
+
+      line-height:2;
+
+      color:#f2ddff;
+    }
+
+    /* DASHBOARD */
+
+    .stats{
+
+      display:grid;
+
+      grid-template-columns:
+      repeat(auto-fit,minmax(260px,1fr));
+
+      gap:24px;
+
+      margin-bottom:70px;
+
+    }
+
+    .card{
+
+      background:
+      rgba(255,255,255,.06);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      border-radius:30px;
+
+      padding:34px;
+
+      backdrop-filter:blur(18px);
+
+      transition:.3s;
+
+      box-shadow:
+      0 0 45px rgba(255,0,200,.08);
+
+    }
+
+    .card:hover{
+
+      transform:translateY(-6px);
+
+      box-shadow:
+      0 0 65px rgba(255,0,200,.18);
+
+    }
+
+    .card h3{
+
+      font-size:4rem;
+
+      margin-bottom:12px;
+
+      color:#ff8ef2;
+
+    }
+
+    .card p{
+
+      color:#efd9ff;
+
+      line-height:1.8;
+
+    }
+
+    /* CHARTS */
+
+    .charts{
+
+      display:grid;
+
+      grid-template-columns:
+      repeat(auto-fit,minmax(340px,1fr));
+
+      gap:30px;
+
+    }
+
+    .chart-box{
+
+      background:
+      rgba(255,255,255,.05);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      border-radius:32px;
+
+      padding:26px;
+
+      backdrop-filter:blur(18px);
+
+    }
+
+    .chart-box h4{
+
+      margin-bottom:20px;
+
+      color:#ffd7fa;
+
+      font-size:1.1rem;
+
+    }
+
+    /* TECHNOLOGY */
+
+    .tech{
+
+      padding:
+      140px 8% 100px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .tech-content{
+
+      max-width:1100px;
+      text-align:center;
+
+    }
+
+    .tech h2{
+
+      font-family:
+      'Cormorant Garamond',serif;
+
+      font-size:5rem;
+
+      margin-bottom:24px;
+
+    }
+
+    .tech p{
+
+      color:#efd9ff;
+
+      line-height:2;
+
+      font-size:1.08rem;
+
+    }
+
+    /* COMMUNITY */
+
+    .community{
+
+      padding:
+      140px 8% 100px;
+
+      text-align:center;
+    }
+
+    .community h2{
+
+      font-family:
+      'Cormorant Garamond',serif;
+
+      font-size:5rem;
+
+      margin-bottom:22px;
+
+    }
+
+    .community p{
+
+      max-width:900px;
+
+      margin:auto;
+
+      line-height:2;
+
+      color:#f0ddff;
+    }
+
+    /* MODAL */
+
+    .modal{
+
+      position:fixed;
+
+      inset:0;
+
+      background:
+      rgba(0,0,0,.82);
+
+      display:none;
+
+      justify-content:center;
+      align-items:center;
+
+      z-index:999999;
+
+      padding:20px;
+
+    }
+
+    .modal-box{
+
+      width:100%;
+      max-width:500px;
+
+      background:
+      linear-gradient(
+      180deg,
+      #250734,
+      #14031e);
+
+      border-radius:36px;
+
+      padding:40px;
+
+      border:
+      1px solid rgba(255,255,255,.10);
+
+      text-align:center;
+
+      position:relative;
+    }
+
+    .modal-box h3{
+
+      font-family:
+      'Cormorant Garamond',serif;
+
+      font-size:3rem;
+
+      margin-bottom:10px;
+
+    }
+
+    .modal-box p{
+
+      color:#efd9ff;
+
+      line-height:1.8;
+
+      margin-bottom:24px;
+
+    }
+
+    .close{
+
+      position:absolute;
+
+      top:18px;
+      right:20px;
+
+      cursor:pointer;
+
+      font-size:1.5rem;
+
+    }
+
+    input{
+
+      width:100%;
+
+      padding:18px;
+
+      border:none;
+
+      border-radius:16px;
+
+      background:
+      rgba(255,255,255,.08);
+
+      color:white;
+
+      margin-bottom:16px;
+
+      outline:none;
+    }
+
+    footer{
+
+      padding:50px;
+
+      text-align:center;
+
+      color:#dcbcff;
+
+      opacity:.7;
+    }
+
+    @media(max-width:900px){
+
+      nav{
+        display:none;
+      }
+
+      .hero h2{
+        font-size:4rem;
+      }
+
+      .title h2,
+      .tech h2,
+      .community h2{
+        font-size:3.4rem;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="bg"></div>
+
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <div class="logo">
+
+      <img
+        src="assets/images/logo.png"
+        alt="LadySafe Logo"
+      >
+
+      <h1>LadySafe</h1>
+
+    </div>
+
+    <nav>
+
+      <a href="#inicio">Início</a>
+      <a href="#protecao">Proteção</a>
+      <a href="#tecnologia">Tecnologia</a>
+      <a href="#comunidade">Comunidade</a>
+
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+
+  <section
+    class="hero"
+    id="inicio"
+  >
+
+    <div class="hero-content">
+
+      <div class="badge">
+        ✦ Proteção digital inteligente
+      </div>
+
+      <h2>
+
+        <span class="gradient">
+          Segurança online,
+        </span>
+
+        <br>
+
+        para segurança offline.
+
+      </h2>
+
+      <p>
+
+        O LadySafe usa inteligência digital para identificar
+        misoginia, violência online, racismo,
+        transfobia e comportamentos abusivos
+        antes que escalem para ameaças reais.
+
+      </p>
+
+      <div class="buttons">
+
+        <button
+          class="btn btn-main"
+          onclick="openModal()"
+        >
+          ✨ Ativar sininho VIP
+        </button>
+
+        <button class="btn btn-secondary">
+          Em breve na App Store
+        </button>
+
+      </div>
+
+     
+
+    </div>
+
+  </section>
+
+  <!-- PROTEÇÃO -->
+
+  <section
+    class="protecao"
+    id="protecao"
+  >
+
+    <div class="title">
+
+      <h2>
+
+        A violência online
+        <br>
+        não termina online.
+
+      </h2>
+
+      <p>
+
+        A violência digital frequentemente escala para perseguição,
+        ameaças presenciais e agressões físicas.
+        O LadySafe nasce para agir antes da escalada.
+
+      </p>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+      <div class="card">
+
+        <h3>70%</h3>
+
+        <p>
+          das mulheres jornalistas e ativistas
+          relatam violência online.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>40%</h3>
+
+        <p>
+          relatam que ataques digitais
+          evoluíram para violência offline.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>95%</h3>
+
+        <p>
+          dos deepfakes sexuais online
+          têm mulheres como alvo.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>1 em 3</h3>
+
+        <p>
+          mulheres já sofreram
+          algum tipo de abuso digital.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CHARTS -->
+
+    <div class="charts">
+
+      <div class="chart-box">
+
+        <h4>
+          Escalada da violência digital
+        </h4>
+
+        <canvas id="lineChart"></canvas>
+
+      </div>
+
+      <div class="chart-box">
+
+        <h4>
+          Tipos de violência online
+        </h4>
+
+        <canvas id="pieChart"></canvas>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TECNOLOGIA -->
+
+  <section
+    class="tech"
+    id="tecnologia"
+  >
+
+    <div class="tech-content">
+
+      <h2>
+        Tecnologia criada
+        para proteger.
+      </h2>
+
+      <p>
+
+        O LadySafe combina análise comportamental,
+        inteligência artificial,
+        reconhecimento de padrões
+        e análise contextual
+        para detectar sinais de risco digital.
+
+        <br><br>
+
+        Uma experiência criada para transformar
+        tecnologia em prevenção.
+
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- COMUNIDADE -->
+
+  <section
+    class="community"
+    id="comunidade"
+  >
+
+    <h2>
+      Proteção coletiva.
+    </h2>
+
+    <p>
+
+      LadySafe também é comunidade,
+      acolhimento e resistência.
+
+      <br><br>
+
+      Um espaço criado para mulheres,
+      pessoas LGBTQIA+,
+      pessoas racializadas
+      e comunidades vulneráveis
+      terem mais segurança
+      dentro e fora da internet.
+
+    </p>
+
+  </section>
+
+  <!-- MODAL -->
+
+  <div
+    class="modal"
+    id="modal"
+  >
+
+    <div class="modal-box">
+
+      <div
+        class="close"
+        onclick="closeModal()"
+      >
+        ✕
+      </div>
+
+      <h3>
+        ✨ Lista VIP
+      </h3>
+
+      <p>
+
+        Receba novidades,
+        acesso antecipado
+        e o lançamento oficial.
+
+      </p>
+
+      <input
+        type="email"
+        placeholder="Digite seu e-mail"
+      >
+
+      <button
+        class="btn btn-main"
+        style="width:100%;"
+      >
+        Entrar para lista
+      </button>
+
+    </div>
+
+  </div>
+
+  <footer>
+
+    © 2026 LadySafe —
+    proteção digital para segurança offline.
+
+  </footer>
+
+  <script>
+
+    function openModal(){
+      document.getElementById('modal').style.display='flex';
+    }
+
+    function closeModal(){
+      document.getElementById('modal').style.display='none';
+    }
+
+    /* CHARTS */
+
+    const lineCtx =
+    document.getElementById('lineChart');
+
+    new Chart(lineCtx,{
+
+      type:'line',
+
+      data:{
+
+        labels:[
+          '2021',
+          '2022',
+          '2023',
+          '2024',
+          '2025',
+          '2026'
+        ],
+
+        datasets:[{
+
+          label:'Crescimento da violência digital',
+
+          data:[
+            22,
+            31,
+            40,
+            52,
+            67,
+            81
+          ],
+
+          borderColor:'#ff67ef',
+
+          backgroundColor:
+          'rgba(255,103,239,.15)',
+
+          tension:.4,
+
+          fill:true
+
+        }]
+
+      },
+
+      options:{
+
+        responsive:true,
+
+        plugins:{
+          legend:{
+            labels:{
+              color:'#fff'
+            }
+          }
+        },
+
+        scales:{
+
+          x:{
+            ticks:{
+              color:'#fff'
+            }
+          },
+
+          y:{
+            ticks:{
+              color:'#fff'
+            }
+          }
+
+        }
+
+      }
+
+    });
+
+    /* PIE */
+
+    const pieCtx =
+    document.getElementById('pieChart');
+
+    new Chart(pieCtx,{
+
+      type:'doughnut',
+
+      data:{
+
+        labels:[
+          'Misoginia',
+          'Stalking',
+          'Racismo',
+          'Transfobia',
+          'Ameaças'
+        ],
+
+        datasets:[{
+
+          data:[
+            35,
+            20,
+            18,
+            12,
+            15
+          ],
+
+          backgroundColor:[
+            '#ff6bf2',
+            '#d24fff',
+            '#ff94fa',
+            '#8d3dff',
+            '#ff2fc7'
+          ],
+
+          borderWidth:0
+
+        }]
+
+      },
+
+      options:{
+
+        plugins:{
+          legend:{
+            labels:{
+              color:'#fff'
+            }
+          }
+        }
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
+
+analise meu site, e quero que a rolagem dele fique mais suave, tá muito bruta. Pode fazer isso? 
