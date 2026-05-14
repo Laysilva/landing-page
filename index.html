@@ -24,7 +24,6 @@
 
     html{
       scroll-behavior:smooth;
-      scroll-snap-type:y proximity;
     }
 
     body{
@@ -36,8 +35,6 @@
 
     section{
       min-height:100vh;
-      scroll-snap-align:start;
-      scroll-snap-stop:normal;
       position:relative;
       overflow:hidden;
     }
@@ -382,55 +379,14 @@
 
     }
 
-    /* MOCKUP */
-
-    .mockup{
-
-      margin-top:70px;
-
-      background:
-      rgba(255,255,255,.05);
-
-      border:
-      1px solid rgba(255,255,255,.08);
-
-      border-radius:40px;
-
-      padding:40px;
-
-      backdrop-filter:blur(18px);
-
-      box-shadow:
-      0 0 90px rgba(255,0,200,.14);
-
-    }
-
-    .mockup img{
-
-      width:320px;
-
-      max-width:100%;
-
-      border-radius:36px;
-
-      box-shadow:
-      0 0 45px rgba(255,0,200,.25);
-
-    }
-
     /* PROTEÇÃO */
 
     .protecao{
-
-      padding:
-      140px 8% 100px;
-
+      padding:140px 8% 100px;
     }
 
     .title{
-
       text-align:center;
-
       margin-bottom:70px;
     }
 
@@ -548,6 +504,8 @@
 
       backdrop-filter:blur(18px);
 
+      min-height:420px;
+
     }
 
     .chart-box h4{
@@ -558,6 +516,11 @@
 
       font-size:1.1rem;
 
+    }
+
+    canvas{
+      width:100% !important;
+      height:300px !important;
     }
 
     /* TECHNOLOGY */
@@ -733,7 +696,7 @@
 
     footer{
 
-      padding:50px;
+      padding:80px 50px 120px;
 
       text-align:center;
 
@@ -758,6 +721,10 @@
         font-size:3.4rem;
       }
 
+      .charts{
+        grid-template-columns:1fr;
+      }
+
     }
 
   </style>
@@ -769,8 +736,6 @@
 
   <div class="glow g1"></div>
   <div class="glow g2"></div>
-
-  <!-- HEADER -->
 
   <header>
 
@@ -795,8 +760,6 @@
     </nav>
 
   </header>
-
-  <!-- HERO -->
 
   <section
     class="hero"
@@ -845,13 +808,9 @@
 
       </div>
 
-     
-
     </div>
 
   </section>
-
-  <!-- PROTEÇÃO -->
 
   <section
     class="protecao"
@@ -877,8 +836,6 @@
       </p>
 
     </div>
-
-    <!-- STATS -->
 
     <div class="stats">
 
@@ -928,8 +885,6 @@
 
     </div>
 
-    <!-- CHARTS -->
-
     <div class="charts">
 
       <div class="chart-box">
@@ -955,8 +910,6 @@
     </div>
 
   </section>
-
-  <!-- TECNOLOGIA -->
 
   <section
     class="tech"
@@ -989,8 +942,6 @@
 
   </section>
 
-  <!-- COMUNIDADE -->
-
   <section
     class="community"
     id="comunidade"
@@ -1017,8 +968,6 @@
     </p>
 
   </section>
-
-  <!-- MODAL -->
 
   <div
     class="modal"
@@ -1064,7 +1013,7 @@
 
   <footer>
 
-    © 2026 LadySafe —
+    © 2026 LadySafe — Lays Silva
     proteção digital para segurança offline.
 
   </footer>
@@ -1079,7 +1028,6 @@
       document.getElementById('modal').style.display='none';
     }
 
-    /* SMOOTH SCROLL NOS LINKS */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e){
         e.preventDefault();
@@ -1092,8 +1040,6 @@
         }
       });
     });
-
-    /* CHARTS */
 
     const lineCtx =
     document.getElementById('lineChart');
@@ -1143,6 +1089,8 @@
 
         responsive:true,
 
+        maintainAspectRatio:false,
+
         plugins:{
           legend:{
             labels:{
@@ -1170,8 +1118,6 @@
       }
 
     });
-
-    /* PIE */
 
     const pieCtx =
     document.getElementById('pieChart');
@@ -1215,6 +1161,10 @@
       },
 
       options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
 
         plugins:{
           legend:{
